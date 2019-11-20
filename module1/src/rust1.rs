@@ -24,11 +24,25 @@ pub fn main1() {
     println!("my_string={}", my_string);
 
     // stack and heap
-    foo_function();
     let stack = 10;
+    let mut stack_mut = 10;
     let heap = Box::new(10);
 
     println!("stack={} heap={}", stack, heap);
     println!("size of stack={} and size of heap pointer={}", mem::size_of_val(&stack), mem::size_of_val(&heap));
     println!("size of stack={} and size of heap={}", mem::size_of_val(&stack), mem::size_of_val(&*heap));
+
+    // scope and shadowing
+    foo_function();
+    // Scoped area
+    {
+        let stack = 21; // shadowed
+        stack_mut = 20;  // Mutable 
+        let scoped_var = 4;
+        println!("scoped_var={} and stack={}", scoped_var, stack);
+    }
+
+    // Shadow
+    let scoped_var = 15;
+    println!("Redeclared scoped_var={} and stack={} and stack_mut={}", scoped_var, stack, stack_mut);
 }
